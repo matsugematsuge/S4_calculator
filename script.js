@@ -90,7 +90,7 @@ function calculate(data) {
     }
 
     if (requiredTimeInMinutes === 0) {
-        resultElement.textContent = `今すぐレベル${targetLabLevel}にアップグレード可能です！`;
+        resultElement.textContent = `今すぐアップグレード可能です！`;
     } else if (requiredTimeInMinutes === Infinity) {
         resultElement.textContent = `生産量が0のため、アップグレードできません。`;
     } else {
@@ -102,8 +102,14 @@ function calculate(data) {
             timeString += `${hours}時間`;
         }
         timeString += `${minutes}分`;
+        
+        // 現在時刻に所要時間を足して完了時刻を計算
+        const now = new Date();
+        const finishTime = new Date(now.getTime() + requiredTimeInMinutes * 60000);
+        const finishHours = finishTime.getHours().toString().padStart(2, '0');
+        const finishMinutes = finishTime.getMinutes().toString().padStart(2, '0');
 
-        resultElement.textContent = `レベル${targetLabLevel}にアップグレードするには、あと ${timeString} かかります。`;
+        resultElement.innerHTML = `あと ${timeString}<br>完了予定時刻: ${finishHours}時${finishMinutes}分`;
     }
 
     saveState();
