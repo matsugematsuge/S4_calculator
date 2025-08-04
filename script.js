@@ -103,8 +103,7 @@ function calculate(data) {
         }
         timeString += `${minutes}分`;
         
-        // 現在時刻に所要時間を足して完了時刻を計算
-        const now = new Date();
+        const now = new Date(); // ここで「計算する」ボタンを押した時点の時間を取得
         const finishTime = new Date(now.getTime() + requiredTimeInMinutes * 60000);
         const finishHours = finishTime.getHours().toString().padStart(2, '0');
         const finishMinutes = finishTime.getMinutes().toString().padStart(2, '0');
