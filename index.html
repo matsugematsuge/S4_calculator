@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ゲームリソース計算ツール</title>
+    <title>シーズン4計算</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>光電研究所 レベルアップ計算ツール</h1>
+    <h1>シーズン4計算</h1>
     <div class="container">
         <div id="workshopInputs">
-            <h3>石英工房 (最大5つ)</h3>
+            <h3>石英工房</h3>
             <div class="workshop-group">
                 <input type="checkbox" id="workshop-1-enabled">
                 <label for="workshop-1-enabled">工房1</label>
@@ -43,11 +43,11 @@
             </div>
         </div>
         <div>
-            <label for="currentQuartz">現在の石英所有量：</label>
+            <label for="currentQuartz" class="left-align-label">現在の石英所有量：</label>
             <input type="number" id="currentQuartz" value="0" min="0">
         </div>
         <div>
-            <label for="targetLabLevel">目標とする光電研究所のレベル：</label>
+            <label for="targetLabLevel" class="left-align-label">目標とする光電研究所のレベル：</label>
             <select id="targetLabLevel"></select>
         </div>
         <button id="calculateButton">計算する</button>
