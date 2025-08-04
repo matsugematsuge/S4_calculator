@@ -1,9 +1,9 @@
 ﻿// ドロップダウンリストを生成する関数
 function populateDropdowns(data) {
-    // 石英工房のレベルを1～30まで生成
+    // 石英工房のレベルを1～35まで生成
     for (let i = 1; i <= 5; i++) {
         const workshopSelect = document.getElementById(`workshop-${i}-level`);
-        for (let j = 1; j <= 30; j++) {
+        for (let j = 1; j <= 35; j++) {
             const option = document.createElement('option');
             option.value = j;
             option.textContent = `${j}`;
@@ -11,9 +11,9 @@ function populateDropdowns(data) {
         }
     }
 
-    // 光電研究所のレベルを1～30まで生成
+    // 光電研究所のレベルを1～35まで生成
     const labSelect = document.getElementById('targetLabLevel');
-    for (let i = 1; i <= 30; i++) {
+    for (let i = 1; i <= 35; i++) {
         const option = document.createElement('option');
         option.value = i;
         option.textContent = `${i}`;
@@ -103,7 +103,7 @@ function calculate(data) {
         }
         timeString += `${minutes}分`;
         
-        const now = new Date(); // ここで「計算する」ボタンを押した時点の時間を取得
+        const now = new Date();
         const finishTime = new Date(now.getTime() + requiredTimeInMinutes * 60000);
         const finishHours = finishTime.getHours().toString().padStart(2, '0');
         const finishMinutes = finishTime.getMinutes().toString().padStart(2, '0');
