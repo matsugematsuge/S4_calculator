@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゲームリソース計算ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>光電研究所 レベルアップ計算ツール</h1>
+    <div class="container">
+        <div>
+            <label for="currentQuartz">現在の石英所有量：</label>
+            <input type="number" id="currentQuartz" value="0" min="0">
+        </div>
+        <div>
+            <label for="workshopLevel">石英工房のレベル：</label>
+            <select id="workshopLevel"></select>
+        </div>
+        <div>
+            <label for="targetLabLevel">目標とする光電研究所のレベル：</label>
+            <select id="targetLabLevel"></select>
+        </div>
+        <button id="calculateButton">計算する</button>
+        <div id="result">
+            <p id="requiredTime"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
