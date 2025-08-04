@@ -9,13 +9,43 @@
 <body>
     <h1>光電研究所 レベルアップ計算ツール</h1>
     <div class="container">
+        <div id="workshopInputs">
+            <h3>石英工房 (最大5つ)</h3>
+            <div class="workshop-group">
+                <input type="checkbox" id="workshop-1-enabled" checked>
+                <label for="workshop-1-enabled">工房1</label>
+                <label for="workshop-1-level">レベル:</label>
+                <select id="workshop-1-level"></select>
+            </div>
+            <div class="workshop-group">
+                <input type="checkbox" id="workshop-2-enabled" checked>
+                <label for="workshop-2-enabled">工房2</label>
+                <label for="workshop-2-level">レベル:</label>
+                <select id="workshop-2-level"></select>
+            </div>
+            <div class="workshop-group">
+                <input type="checkbox" id="workshop-3-enabled">
+                <label for="workshop-3-enabled">工房3</label>
+                <label for="workshop-3-level">レベル:</label>
+                <select id="workshop-3-level"></select>
+            </div>
+            <div class="workshop-group">
+                <input type="checkbox" id="workshop-4-enabled">
+                <label for="workshop-4-enabled">工房4</label>
+                <label for="workshop-4-level">レベル:</label>
+                <select id="workshop-4-level"></select>
+            </div>
+            <div class="workshop-group">
+                <input type="checkbox" id="workshop-5-enabled">
+                <label for="workshop-5-enabled">工房5</label>
+                <label for="workshop-5-level">レベル:</label>
+                <select id="workshop-5-level"></select>
+            </div>
+        </div>
+
         <div>
             <label for="currentQuartz">現在の石英所有量：</label>
             <input type="number" id="currentQuartz" value="0" min="0">
-        </div>
-        <div>
-            <label for="workshopLevel">石英工房のレベル：</label>
-            <select id="workshopLevel"></select>
         </div>
         <div>
             <label for="targetLabLevel">目標とする光電研究所のレベル：</label>
