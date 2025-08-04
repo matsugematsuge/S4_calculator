@@ -6,25 +6,58 @@ function populateDropdowns(data) {
         for (let j = 1; j <= 30; j++) {
             const option = document.createElement('option');
             option.value = j;
-            option.textContent = `レベル${j}`;
+            option.textContent = `${j}`;
             workshopSelect.appendChild(option);
         }
     }
 
-    // 光電研究所のレベルを2～30まで生成
+    // 光電研究所のレベルを1～30まで生成
     const labSelect = document.getElementById('targetLabLevel');
-    for (let i = 2; i <= 30; i++) {
+    for (let i = 1; i <= 30; i++) {
         const option = document.createElement('option');
         option.value = i;
-        option.textContent = `レベル${i}`;
+        option.textContent = `${i}`;
         labSelect.appendChild(option);
+    }
+}
+
+// フォームの状態をローカルストレージに保存する関数
+function saveState() {
+    const state = {
+        currentQuartz: document.getElementById('currentQuartz').value,
+        targetLabLevel: document.getElementById('targetLabLevel').value,
+        workshops: []
+    };
+
+    for (let i = 1; i <= 5; i++) {
+        state.workshops.push({
+            enabled: document.getElementById(`workshop-${i}-enabled`).checked,
+            level: document.getElementById(`workshop-${i}-level`).value
+        });
+    }
+
+    localStorage.setItem('gameCalculatorState', JSON.stringify(state));
+}
+
+// ローカルストレージから状態を復元する関数
+function restoreState() {
+    const savedState = localStorage.getItem('gameCalculatorState');
+    if (!savedState) return;
+
+    const state = JSON.parse(savedState);
+    
+    document.getElementById('currentQuartz').value = state.currentQuartz;
+    document.getElementById('targetLabLevel').value = state.targetLabLevel;
+
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById(`workshop-${i}-enabled`).checked = state.workshops[i - 1].enabled;
+        document.getElementById(`workshop-${i}-level`).value = state.workshops[i - 1].level;
     }
 }
 
 // 計算を実行する関数
 function calculate(data) {
     let totalProductionPerHour = 0;
-    // 5つの石英工房の生産量を合計
     for (let i = 1; i <= 5; i++) {
         const enabledCheckbox = document.getElementById(`workshop-${i}-enabled`);
         if (enabledCheckbox.checked) {
@@ -47,31 +80,33 @@ function calculate(data) {
     
     const remainingQuartz = requiredQuartz - currentQuartz;
     
-    let requiredTime;
+    let requiredTimeInMinutes;
     if (remainingQuartz <= 0) {
-        requiredTime = 0;
+        requiredTimeInMinutes = 0;
     } else if (totalProductionPerHour <= 0) {
-        requiredTime = Infinity;
+        requiredTimeInMinutes = Infinity;
     } else {
-        requiredTime = remainingQuartz / totalProductionPerHour;
+        requiredTimeInMinutes = (remainingQuartz / totalProductionPerHour) * 60;
     }
 
-    if (requiredTime === 0) {
+    if (requiredTimeInMinutes === 0) {
         resultElement.textContent = `今すぐレベル${targetLabLevel}にアップグレード可能です！`;
-    } else if (requiredTime === Infinity) {
+    } else if (requiredTimeInMinutes === Infinity) {
         resultElement.textContent = `生産量が0のため、アップグレードできません。`;
     } else {
-        const days = Math.floor(requiredTime / 24);
-        const hours = requiredTime % 24;
+        const hours = Math.floor(requiredTimeInMinutes / 60);
+        const minutes = Math.round(requiredTimeInMinutes % 60);
         
         let timeString = '';
-        if (days > 0) {
-            timeString += `${days}日`;
+        if (hours > 0) {
+            timeString += `${hours}時間`;
         }
-        timeString += `${hours.toFixed(1)}時間`;
+        timeString += `${minutes}分`;
 
-        resultElement.textContent = `レベル${targetLabLevel}にアップグレードするには、あと約 ${timeString} かかります。`;
+        resultElement.textContent = `レベル${targetLabLevel}にアップグレードするには、あと ${timeString} かかります。`;
     }
+
+    saveState();
 }
 
 // 外部ファイルからデータを読み込む処理
@@ -85,8 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             populateDropdowns(data);
+            restoreState();
+            
             document.getElementById('calculateButton').addEventListener('click', () => {
                 calculate(data);
+            });
+
+            document.querySelectorAll('input, select').forEach(element => {
+                element.addEventListener('change', saveState);
             });
         })
         .catch(error => {
