@@ -11,7 +11,6 @@
     <div class="container">
         <div id="workshopInputs">
             <h3>石英工房</h3>
-            <p>解放済の工房は左の□にチェックを入れてください</p>
             <div class="workshop-group">
                 <input type="checkbox" id="workshop-1-enabled">
                 <label for="workshop-1-enabled">工房1</label>
@@ -48,8 +47,8 @@
             <input type="number" id="currentQuartz" value="0" min="0">
         </div>
         <div>
-            <label for="targetLabLevel" class="left-align-label">目標とする光電研究所のレベル：</label>
-            <select id="targetLabLevel"></select>
+            <label for="requiredQuartzInput" class="left-align-label">レベルアップに必要な石英：</label>
+            <input type="number" id="requiredQuartzInput" value="0" min="0">
         </div>
         <button id="calculateButton">計算する</button>
         <div id="result">
@@ -58,6 +57,4 @@
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>
-

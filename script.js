@@ -1,6 +1,5 @@
 ﻿// ドロップダウンリストを生成する関数
 function populateDropdowns(data) {
-    // 石英工房のレベルを1～35まで生成
     for (let i = 1; i <= 5; i++) {
         const workshopSelect = document.getElementById(`workshop-${i}-level`);
         for (let j = 1; j <= 35; j++) {
@@ -10,22 +9,14 @@ function populateDropdowns(data) {
             workshopSelect.appendChild(option);
         }
     }
-
-    // 光電研究所のレベルを1～35まで生成
-    const labSelect = document.getElementById('targetLabLevel');
-    for (let i = 1; i <= 35; i++) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.textContent = `${i}`;
-        labSelect.appendChild(option);
-    }
 }
 
 // フォームの状態をローカルストレージに保存する関数
 function saveState() {
     const state = {
         currentQuartz: document.getElementById('currentQuartz').value,
-        targetLabLevel: document.getElementById('targetLabLevel').value,
+        // 修正: 目標レベルの代わりに、必要な石英総量を保存
+        requiredQuartzInput: document.getElementById('requiredQuartzInput').value,
         workshops: []
     };
 
@@ -47,7 +38,7 @@ function restoreState() {
     const state = JSON.parse(savedState);
     
     document.getElementById('currentQuartz').value = state.currentQuartz;
-    document.getElementById('targetLabLevel').value = state.targetLabLevel;
+    document.getElementById('requiredQuartzInput').value = state.requiredQuartzInput;
 
     for (let i = 1; i <= 5; i++) {
         document.getElementById(`workshop-${i}-enabled`).checked = state.workshops[i - 1].enabled;
@@ -67,13 +58,11 @@ function calculate(data) {
     }
     
     const currentQuartz = parseInt(document.getElementById('currentQuartz').value, 10);
-    const targetLabLevel = document.getElementById('targetLabLevel').value;
-    
-    const requiredQuartz = data.requiredQuartz[targetLabLevel];
+    const requiredQuartz = parseInt(document.getElementById('requiredQuartzInput').value, 10);
     
     const resultElement = document.getElementById('requiredTime');
 
-    if (isNaN(currentQuartz) || !requiredQuartz) {
+    if (isNaN(currentQuartz) || isNaN(requiredQuartz) || requiredQuartz < 0) {
         resultElement.textContent = "入力が無効です。";
         return;
     }
